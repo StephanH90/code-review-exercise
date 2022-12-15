@@ -8,6 +8,8 @@
 		<link rel="stylesheet" type="text/css" href="view/stylesheets/style.css">
 
 		<script src="controller/requests.js"></script>
+
+		<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 	</head>
 	<body>
 		<nav>
