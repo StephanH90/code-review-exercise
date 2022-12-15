@@ -15,6 +15,11 @@
 		return $response;
 	});
 
+	$app->get("/popular-products", function (Request $request, Response $response, $args) {
+		require "product/popular-list.php";
+		return $response;
+	});
+
 	/**
 	 * @OA\Get(
 	 *     path="/Product/{sku}",
