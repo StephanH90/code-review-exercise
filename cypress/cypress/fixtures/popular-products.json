@@ -1,0 +1,35 @@
+[
+  {
+    "product_id": "1",
+    "sku": "meat",
+    "active": "1",
+    "id_category": null,
+    "name": "meat",
+    "product_image": "foto",
+    "description": "Fleisch.",
+    "price": "6.00",
+    "stock": "1"
+  },
+  {
+    "product_id": "2",
+    "sku": "bread",
+    "active": "1",
+    "id_category": null,
+    "name": "bread",
+    "product_image": "foto",
+    "description": "Bro.",
+    "price": "3.50",
+    "stock": "3"
+  },
+  {
+    "product_id": "3",
+    "sku": "eggs",
+    "active": "1",
+    "id_category": null,
+    "name": "eggs",
+    "product_image": null,
+    "description": null,
+    "price": "4.00",
+    "stock": "12"
+  }
+]
