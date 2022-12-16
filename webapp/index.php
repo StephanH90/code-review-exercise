@@ -14,10 +14,13 @@
       </tr>
     </thead>
     <tbody id="products-table">
-      <tr v-for="product in products">
+      <tr v-for="product in products" :data-test-product-id="product.product_id">
         <td>{{product.name}}</td>
         <td>{{product.price}}</td>
-        <td :style="{ color: stockColor(product) }">{{product.stock}}</td>
+        <td
+          :style="{ color: stockColor(product) }"
+          :data-test-stock-id="product.product_id"
+        >{{product.stock}}</td>
       </tr>
     </tbody>
   </table>
