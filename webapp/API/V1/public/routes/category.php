@@ -10,7 +10,6 @@
 	 *     @OA\Response(response="200", description="Success"))
 	 */
 	$app->get("/Categories", function (Request $request, Response $response, $args) {
-		require "util/authentication.php";
 		require "category/list.php";
 		return $response;
 	});
