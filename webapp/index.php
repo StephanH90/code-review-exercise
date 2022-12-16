@@ -5,6 +5,23 @@
 <h2>Our most popular products</h2>
 
 <div id="app">
+  <div style="margin-bottom: 1em;">
+    <label for="category-filter">Nach Kategorie filtern: </label>
+    <select
+      name="category-filter"
+      v-model="selectedCategoryId"
+    >
+      <option value="">Kein Filter</option>
+      <option
+        v-for="category in categories"
+        :key="category.category_id"
+        :value="category.category_id"
+      >
+        {{category.name}}
+      </option>
+    </select>
+  </div>
+
   <table>
     <thead>
       <tr>
@@ -15,7 +32,7 @@
       </tr>
     </thead>
     <tbody id="products-table">
-      <tr v-for="product in products" :data-test-product-id="product.product_id">
+      <tr v-for="product in filteredProducts" :data-test-product-id="product.product_id">
         <td>{{product.name}}</td>
         <td
           v-if="product.id_category && categoryForProduct(product)"
@@ -40,7 +57,19 @@
     data() {
       return {
         products: [],
-        categories: []
+        categories: [],
+        selectedCategoryId: ""
+      }
+    },
+    computed: {
+      filteredProducts () {
+        if (this.selectedCategoryId === "") {
+          return this.products
+        } else {
+          return this.products.filter((product) => {
+            return product.id_category === this.selectedCategoryId
+          })
+        }
       }
     },
     methods: {
@@ -58,7 +87,8 @@
       const categoriesResult = await fetch('API/V1/Categories')
       
       this.products = await productsResult.json()
-      this.categories = await categoriesResult.json()
+      const allCategories = await categoriesResult.json()
+      this.categories = allCategories.filter((category) => category.active === "1")
     }
   }).mount('#app')
 </script>
