@@ -25,10 +25,16 @@
   <table>
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Price</th>
-        <th>Stock</th>
+        <th
+          v-for="column in ['name', 'category', 'price', 'stock']"
+          :key="column"
+          @click="sortBy === column ? sortBy = `-${column}` : sortBy = column"
+        >
+            {{column}} 
+            <span v-if="sortBy === column">↓</span>
+            <span v-else-if="sortBy === `-${column}`">↑</span>
+            <span v-else>↕</span>
+        </th>
       </tr>
     </thead>
     <tbody id="products-table">
@@ -50,6 +56,7 @@
   </table>
 </div>
 
+
 <script>
   const { createApp } = Vue
 
@@ -58,18 +65,45 @@
       return {
         products: [],
         categories: [],
-        selectedCategoryId: ""
+        selectedCategoryId: "",
+        sortBy: ''
       }
     },
     computed: {
       filteredProducts () {
+        let products
+
+        // Filter products by category
         if (this.selectedCategoryId === "") {
-          return this.products
+          products = this.products
         } else {
-          return this.products.filter((product) => {
-            return product.id_category === this.selectedCategoryId
+          products = this.products.filter((product) => product.id_category === this.selectedCategoryId)
+        }
+
+        // Sort products
+        if (this.sortBy !== '') {
+          return products.sort((a, b) => {
+            if (this.sortBy[0] === "-") {
+              const sortAttr = this.sortBy.slice(1) // remove the leading '-', ex: '-name' => 'name'
+
+              if (isNaN(a[sortAttr])) {
+                // we are comparing a string
+                return a[sortAttr].localeCompare(b[sortAttr]);
+              } else {
+                return a[sortAttr] - b[sortAttr];
+              }
+            } else {
+              if (isNaN(a[this.sortBy])) {
+                // we are comparing a string
+                return b[this.sortBy].localeCompare(a[this.sortBy]);
+              } else {
+                return b[this.sortBy] - a[this.sortBy];
+              }
+            }
           })
         }
+        
+        return products
       }
     },
     methods: {
