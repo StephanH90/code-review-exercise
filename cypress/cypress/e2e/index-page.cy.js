@@ -27,7 +27,7 @@ const createProduct = function (isActive = true) {
 }
 
 describe('index page', () => {
-  it('highlights the stock amount in red if it is <= 3', () => {
+  it('highlights the stock amount in red if it is <= 3', () => {cy.intercept('/API/V1/popular-products', { fixture: 'popular-products.json' })
     cy.intercept('/API/V1/popular-products', { fixture: 'popular-products.json' })
     
     cy.visit('localhost')
@@ -54,5 +54,31 @@ describe('index page', () => {
     cy.visit('localhost')
     cy.get('body').should('contain.text', activeProductName)
     cy.get('body').should('not.contain.text', inActiveProductName)
+  })
+
+  it('filters products by category name', () => {
+    cy.intercept('/API/V1/popular-products', { fixture: 'popular-products.json' })
+    cy.intercept('/API/V1/Categories', { fixture: 'categories.json' })
+    cy.visit('localhost')
+
+    cy.get('select').select('tec')
+    cy.get('body').should('contain.text', 'bread')
+    cy.get('body').should('not.contain.text', 'meat')
+  })
+
+  it('sorts products by name ascending and descending', () => {
+    cy.intercept('/API/V1/popular-products', { fixture: 'popular-products.json' })
+    cy.intercept('/API/V1/Categories', { fixture: 'categories.json' })
+    cy.visit('localhost')
+
+    cy.contains('name').click() // sort by name
+    cy.get('#products-table').children().eq(0).should('contain.text', 'meat')
+    cy.get('#products-table').children().eq(1).should('contain.text', 'eggs')
+    cy.get('#products-table').children().eq(2).should('contain.text', 'bread')
+    
+    cy.contains('name').click() // sort by name
+    cy.get('#products-table').children().eq(2).should('contain.text', 'meat')
+    cy.get('#products-table').children().eq(1).should('contain.text', 'eggs')
+    cy.get('#products-table').children().eq(0).should('contain.text', 'bread')
   })
 })

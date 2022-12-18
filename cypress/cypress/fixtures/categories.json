@@ -1,0 +1,22 @@
+[
+  {
+    "category_id": "1",
+    "active": "0",
+    "name": "cool food"
+  },
+  {
+    "category_id": "2",
+    "active": "1",
+    "name": "tec"
+  },
+  {
+    "category_id": "6",
+    "active": "0",
+    "name": "spices"
+  },
+  {
+    "category_id": "8",
+    "active": "1",
+    "name": "lol test"
+  }
+]
