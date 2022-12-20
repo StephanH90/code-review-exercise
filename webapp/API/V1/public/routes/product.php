@@ -10,7 +10,6 @@
 	 *     @OA\Response(response="200", description="Success"))
 	 */
 	$app->get("/Products", function (Request $request, Response $response, $args) {
-		require "util/authentication.php";
 		require "product/list.php";
 		return $response;
 	});
